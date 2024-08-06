@@ -1,0 +1,30 @@
+{
+  "name": "@webf/graphql-sdk",
+  "version": "0.1.0",
+  "description": "A GraphQL Code Generator plugin to generate SDK for all queries",
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev:watch": "tsc -p tsconfig.build.json --watch",
+    "dev:gql": "graphql-codegen-esm --c ./script/codegen.ts",
+    "dev:format": "prettier --write ./src"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@graphql-codegen/plugin-helpers": "^5.0.4"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.2",
+    "graphql": "^16.9.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.5.4"
+  },
+  "volta": {
+    "node": "22.6.0"
+  }
+}
