@@ -1,3 +1,8 @@
 type Query {
-  hello: String!
+  """Basic ping pong message"""
+  hello: String
+  hello2: String!
+  hello3: [String]
+  hello4: [String]!
+  hello5: [String!]!
 }

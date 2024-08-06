@@ -1,17 +1,33 @@
-import { type CodegenPlugin, type PluginFunction } from '@graphql-codegen/plugin-helpers';
+import {
+  type CodegenPlugin,
+  type PluginFunction,
+} from '@graphql-codegen/plugin-helpers';
+import { Project, ScriptKind, ScriptTarget } from 'ts-morph';
 
+import { processQuery } from './Query.js';
 
-export const plugin: PluginFunction = async (schema, documents, config, info) => {
-  // throw new Error('Not implemented');
-  const typesMap = schema.getTypeMap();
+export const plugin: PluginFunction = async (
+  schema,
+  documents,
+  config,
+  info
+) => {
+  const project = new Project({
+    useInMemoryFileSystem: true,
+    compilerOptions: {
+      target: ScriptTarget.ESNext,
+    },
+  });
 
-  const query = schema.getQueryType();
+  const sourceFile = project.createSourceFile('main.ts', '', {
+    scriptKind: ScriptKind.TS,
+  });
 
-  if (query) {
-    query.getFields();
-  }
+  processQuery(schema, sourceFile);
 
-  return 'Done!';
+  const generated = sourceFile.getFullText();
+
+  return generated;
 };
 
 const pluginObject: CodegenPlugin = {

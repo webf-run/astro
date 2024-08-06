@@ -1,4 +1,5 @@
 **/*.html
 dist
 build
-src/gen
+gen
+node_modules
