@@ -1,0 +1,18 @@
+{
+  "name": "@webf/duri",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@webf/travel": "^0.0.1",
+    "astro": "^5.13.3"
+  },
+  "volta": {
+    "node": "22.18.0"
+  }
+}
