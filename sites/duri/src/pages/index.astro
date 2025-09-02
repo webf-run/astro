@@ -1,17 +1,79 @@
 ---
-import Hero from '@webf/travel/Hero.astro'
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import Footer from "../components/Footer.astro";
+
+import "../styles/global.css";
+import {PackageCarousel} from "../components/PackageCarousel";
+import { getCollection } from "astro:content";
+
+const packages = await getCollection("packages");
+
+
+const packageList: Array<{
+  title: string;
+  coverImage: string;
+  price: string;
+}> = packages.map((val: any) => ({
+  title: val.data.name,
+  coverImage: val.data.coverImage,
+  priceFrom: val.data.priceFrom
+}));
+
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-		<Hero />
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+ <style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+  * {
+    font-family: "Plus Jakarta Sans", sans-serif;
+  }
+</style>
+  <body>
+    <Header
+      headerTitle="Duri Holidays"
+      headerNavLinks={[
+        { link: "/", linkText: "Home" },
+        { link: "/", linkText: "About us" },
+        { link: "/", linkText: "International Tours" },
+        { link: "/", linkText: "Domestic Tours" },
+        { link: "/", linkText: "Blogs" },
+        { link: "/", linkText: "Reviews" }
+      ]}
+    />
+    <Hero
+      heroTitleLine1="Let's"
+      heroTitleEmphasised="travel"
+      heroTitleLine3="the world"
+      subTitle="Enjoy breathtaking views and cherish your dreams to the fullest."
+    />
+    <PackageCarousel
+      packageCarouselTitle="Trending Packages"
+      ,
+      packageList={packageList}
+      client:load
+    />
+    <PackageCarousel
+      packageCarouselTitle="Popular Destinations"
+      ,
+      packageList={packageList}
+      client:load
+    />
+    <Footer
+      companyTitle="Duri Holidays"
+      footerCopyright="copyright text will come here"
+      footerLinks={[
+        { link: "/", linkText: "Home" },
+        { link: "/", linkText: "About us" }
+      ]}
+      socials={{ facebook: "/", instagram: "/", twitter: "/", youtube: "/" }}
+    />
+  </body>
 </html>

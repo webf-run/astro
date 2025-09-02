@@ -1,0 +1,35 @@
+:root {
+  --bg-color: white;
+  --text-color: black;
+  --subheading-color: #555;
+  --border-color: #ccc;
+  --icon-bg: black;
+}
+
+[data-theme="dark"] {
+  --bg-color: #1a1a1a;
+  --text-color: white;
+  --subheading-color: #555;
+  --border-color: #faf5f5;
+  --icon-bg: white;
+}
+
+body {
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  margin: auto;
+  color: var(--text-color);
+  font-family: sans-serif;
+}
+
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1320px;
+    }
+}

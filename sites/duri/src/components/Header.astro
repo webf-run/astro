@@ -1,0 +1,289 @@
+---
+import { X } from "@lucide/astro";
+
+interface Props {
+  headerLogo?: string;
+  headerTitle?: string;
+  headerNavLinks: Array<{
+    link: string;
+    linkText: string;
+  }>;
+}
+
+const { headerLogo, headerTitle, headerNavLinks } = Astro.props;
+---
+
+<style>
+  .header {
+    margin: auto;
+    padding: 1rem 2rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    font-family: sans-serif;
+
+    color: var(--text-color);
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-color);
+  }
+
+  .mobile-view {
+    display: none;
+    height: 100%;
+    width: 100%;
+
+    flex-direction: column;
+
+    z-index: 10000;
+
+    background: var(--bg-color);
+  }
+
+  .mobile-view .header {
+    margin: 0;
+  }
+
+  /* LOGO */
+  .logo {
+    font-weight: bold;
+    font-size: 1.25rem;
+  }
+
+  /* NAVIGATION MENU */
+  .main-nav {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 0.9rem 2rem;
+  }
+
+  .main-nav a {
+    display: contents;
+
+    font-size: 0.95rem;
+    text-decoration: none;
+    color: var(--text-color);
+  }
+
+  .main-nav a:hover {
+    text-decoration: underline;
+  }
+
+  .mobile-nav {
+    display: none;
+    flex-direction: column;
+  }
+
+  /* HEADER RIGHT SIDE */
+  .header-right-side {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+
+    border: 1px solid var(--text-color);
+  }
+
+  /* CONTACT BUTTON */
+  .contact-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    
+    padding: 0.5rem 1rem;
+
+    border-right: 1px solid var(--text-color);
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
+
+    font-size: 0.85rem;
+    text-transform: uppercase;
+
+    cursor: pointer;
+    color: var(--text-color);
+    background: var(--bg-color);
+  }
+
+  .theme-toggle {
+    margin: 0.5rem 1rem;
+
+    border: none;
+    background: var(--bg-color);
+    cursor: pointer;
+  }
+
+  /* MOBILE MENU TOGGLE */
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+
+    padding: 0.5rem 1rem;
+
+    border-left: 1px solid var(--text-color);
+    border-right: none;
+    border-top: none;
+
+    border-bottom: none;
+    cursor: pointer;
+  }
+
+  .menu-toggle span {
+    width: 24px;
+    height: 2px;
+
+    display: block;
+
+    background: var(--text-color);
+  }
+
+  .active {
+    display: flex !important;
+  }
+
+  .mobile-view.active {
+    right: 0;
+  }
+
+  /* RESPONSIVE STYLES */
+  @media (max-width: 768px) {
+    .mobile-view {
+      display: flex;
+      position: fixed;
+      top: 0;
+      right: -100%;
+
+      transition: right 0.3s ease-in-out;
+    }
+
+    .mobile-nav {
+      display: flex;
+      gap: 1rem;
+
+      padding-top: 1.5rem;
+
+      background: var(--bg-color);
+    }
+
+    .mobile-nav a {
+      padding: 0 2rem;
+
+      font-size: 1.5rem;
+      text-decoration: none;
+
+      color: var(--text-color);
+    }
+
+    .main-nav {
+      display: none;
+      top: 74px;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 1rem;
+
+      flex-direction: column;
+      gap: 1rem;
+
+      border-top: 1px solid var(--border-color);
+      color: var(--text-color);
+      background: var(--bg-color);
+      
+      z-index: 1;
+    }
+
+    .menu-toggle {
+      display: flex;
+    }
+
+    .contact-button {
+      display: none;
+    }
+  }
+</style>
+<div>
+  <!-- Desktop  -->
+  <header class="header desktop-view">
+    <!-- Logo -->
+    {headerTitle && <h1 class="logo">{headerTitle}</h1>}
+    {headerLogo && <img src={headerLogo} alt="logo" class="logo" />}
+
+    <nav class="main-nav" id="main-nav">
+      {
+        headerNavLinks.map((val) => (
+          <div>
+              <a href={val.link}>{val.linkText}</a>
+          </div>
+        ))
+      }
+    </nav>
+
+    <!-- Contact Button (Desktop Only) -->
+    <div class="header-right-side">
+      <button class="contact-button"> Contact Us </button>
+      <button class="theme-toggle">🌓</button>
+      <div class="menu-toggle" id="hamburger-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navbar: Active  -->
+  <div class="mobile-view">
+    <header class="header">
+      <!-- Logo -->
+      {headerTitle && <h1 class="logo">{headerTitle}</h1>}
+      {headerLogo && <img src={headerLogo} alt="logo" class="logo" />}
+
+      <div class="header-right-side">
+        <button class="theme-toggle">🌓</button>
+        <div class="menu-toggle" id="close-nav">
+          <X />
+        </div>
+      </div>
+    </header>
+    <nav class="mobile-nav">
+      <a href="/">Home</a>
+      <a href="/about-us">About us</a>
+      <a href="/international-tours">International Tours</a>
+      <a href="/domestic-tours">Domestic Tours</a>
+      <a href="/pricing">Blogs</a>
+      <a href="/reviews">Reviews</a>
+    </nav>
+  </div>
+</div>
+<script>
+  const openNavMenu = document.getElementById("hamburger-menu");
+  const closeNavMenu = document.getElementById("close-nav");
+  const mobileNav = document.querySelector(".mobile-view");
+  const themeToggle = document.querySelectorAll(".theme-toggle");
+
+  openNavMenu?.addEventListener("click", () => {
+    mobileNav?.classList.add("active");
+  });
+
+  closeNavMenu?.addEventListener("click", () => {
+    mobileNav?.classList.remove("active");
+  });
+
+  function setInitialTheme() {
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    } else {
+      document.documentElement.setAttribute("data-theme", "light");
+    }
+  }
+  setInitialTheme();
+
+  // Theme toggle button
+  themeToggle.forEach((val) =>
+    val.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme");
+      const nextTheme = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", nextTheme);
+    })
+  );
+</script>

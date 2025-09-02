@@ -1,0 +1,285 @@
+---
+import heroImg1 from "../../public/images/photo-1512100356356-de1b84283e18.avif";
+import heroImg2 from "../../public/images/photo-1516483638261-f4dbaf036963.avif";
+import heroImg3 from "../../public/images/photo-1553697388-94e804e2f0f6.avif";
+
+interface Props {
+  heroTitleLine1: string;
+  heroTitleEmphasised: string;
+  heroTitleLine3: string;
+  subTitle: string;
+}
+
+const { heroTitleLine1, heroTitleEmphasised, heroTitleLine3, subTitle } =
+  Astro.props;
+
+---
+
+<style>
+  .hero {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 2rem;
+
+    color: var(--text-color);
+    background: var(--bg-color);
+  }
+
+  .hero-inner {
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+
+  .left {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .heading {
+    margin: 0;
+
+    font-size: clamp(6rem, 4vw, 2.8rem);
+    font-weight: 800;
+    line-height: 1.2;
+  }
+
+  .sub-title {
+    margin: 0;
+    max-width: 500px;
+
+    white-space: break-spaces;
+    font-size: 2rem;
+    color: var(--subheading-color);
+  }
+
+  .right {
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+  }
+
+  .image-collage {
+    max-height: 556px;
+
+    display: grid;
+    grid-template-areas:
+      "large tall"
+      "small tall";
+    grid-template-columns: 1fr 0.8fr;
+    grid-template-rows: auto auto;
+    gap: 1rem;
+  }
+
+  .hero-image {
+    display: block;
+
+    width: 100%;
+    object-fit: cover;
+    border-radius: 1rem;
+  }
+
+  .img-large {
+    height: 250px;
+
+    grid-area: large;
+    opacity: 0;
+    animation: fadeInFromTop 1s ease forwards;
+    animation-delay: 0.2s;
+  }
+
+  .img-tall {
+    height: 100%;
+
+    grid-area: tall;
+    opacity: 0;
+    animation: fadeInFromRight 1s ease forwards;
+    animation-delay: 0.4s;
+  }
+
+  .img-small {
+    height: 290px;
+
+    grid-area: small;
+    opacity: 0;
+    animation: fadeInFromBottom 1s ease forwards;
+    animation-delay: 0.6s;
+  }
+
+  .partners {
+    padding: 2rem 1rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .social {
+    padding: 0.5rem 1rem;
+
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    background: var(--bg-color);
+    border-radius: 30px;
+    box-shadow: 0 2px 8px var(--border-color);
+  }
+
+  .follow-text {
+    font-weight: 600;
+    color: var(--text-color);
+  }
+
+  .icon {
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    font-size: 14px;
+    color: var(--text-color);
+    background: var(--text-color);
+    transition: background 0.3s ease;
+  }
+
+  .icon:hover {
+    background: #eee;
+  }
+
+  .brands {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .brands img {
+    max-height: 28px;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+  }
+
+  .brands img:hover {
+    opacity: 0.8;
+  }
+
+  /* Responsive adjustments */
+  @media (min-width: 768px) {
+    .partners {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+    }
+    .right {
+      order: -1;
+    }
+    .image-collage {
+      display: none;
+    }
+  }
+
+  /* Keyframes for animated fade-ins */
+  @keyframes fadeInFromTop {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInFromRight {
+    0% {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fadeInFromBottom {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<section class="hero">
+  <div style="max-width: 1320px; display: flex; flex-direction: column;">
+    <div class="hero-inner">
+      <div class="left">
+        <h1 class="heading">
+          {heroTitleLine1}
+          <span style="color: orange;">{heroTitleEmphasised}</span>
+          <br />
+          {heroTitleLine3}
+        </h1>
+
+        <p class="sub-title">
+          {subTitle}
+        </p>
+      </div>
+
+      <div class="right">
+        <div class="image-collage">
+          <img src={heroImg1.src} alt="Image 1" class="hero-image img-large" />
+          <img src={heroImg2.src} alt="Image 2" class={"hero-image img-tall"} />
+          <img
+            src={heroImg3.src}
+            alt="Image 3"
+            class={"hero-image img-small"}
+          />
+        </div>
+      </div>
+    </div>
+    <div class="partners">
+      <div class="social">
+        <span class="follow-text">Follow</span>
+        <a href="#" aria-label="Facebook" class="icon">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="#" aria-label="Instagram" class="icon">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="#" aria-label="Twitter" class="icon">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </div>
+
+      <div class="brands">
+        <img src={"/"} alt="Expedia" />
+        <img src={"/"} alt="Turkish Airlines" />
+        <img src={"/"} alt="Skyscanner" />
+        <img src={"/"} alt="Airbnb" />
+      </div>
+    </div>
+  </div>
+</section>

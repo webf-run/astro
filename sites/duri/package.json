@@ -1,18 +1,23 @@
 {
-  "name": "@webf/duri",
-  "version": "0.0.1",
-  "private": true,
+  "name": "tour",
   "type": "module",
+  "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "dependencies": {
-    "@webf/travel": "^0.0.1",
-    "astro": "^5.13.3"
-  },
-  "volta": {
-    "node": "22.18.0"
+    "@astrojs/markdoc": "^0.15.4",
+    "@astrojs/react": "^4.3.0",
+    "@keystatic/astro": "^5.0.6",
+    "@keystatic/core": "^0.5.48",
+    "@lucide/astro": "^0.541.0",
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "astro": "^5.12.9",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
   }
 }
